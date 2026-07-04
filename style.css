@@ -106,7 +106,11 @@ a{color:inherit;}
 #edgeRock{cursor:pointer;}
 #edgeRock:active{transform:scale(0.85);}
 @media (max-width:640px){
-  .toc-edge{font-size:1.15rem;}
+  .toc-nav{padding:8px 10px;}
+  .toc-nav .toc-bar{gap:6px;}
+  .toc-nav .toc-inner{gap:5px;}
+  .toc-nav a{padding:5px 8px; font-size:.64rem;}
+  .toc-edge{font-size:1.1rem; padding:2px;}
 }
 
 /* ---------- SECTION SCAFFOLD ---------- */
