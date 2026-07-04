@@ -10,6 +10,18 @@ const fmtScore = n => {
 
 const PALETTE = {strawberry:'#FF6F91', mint:'#5FC7A3', lavender:'#9B87F5', gold:'#F2A73B', cocoa:'#4A2E23', cocoaSoft:'#8A6B5C'};
 
+function wrapLabel(text, maxCharsPerLine, maxLines){
+  if(!text) return [''];
+  const lines = [];
+  for(let i=0; i<text.length && lines.length<maxLines; i+=maxCharsPerLine){
+    lines.push(text.slice(i, i+maxCharsPerLine));
+  }
+  if(lines.length===maxLines && text.length > maxLines*maxCharsPerLine){
+    lines[maxLines-1] = lines[maxLines-1].slice(0, -1) + '…';
+  }
+  return lines;
+}
+
 /* ---------- HERO STATS ---------- */
 function renderHero(){
 try{
@@ -88,11 +100,12 @@ try{
   `).join('');
 
   const scored = DATA.ice_list.filter(x=>x.score_num).sort((a,b)=>b.score_num-a.score_num).slice(0,18);
+  const iceLabels = scored.map(x=>(x.ep||'')+' '+(x.name||'').replace(/\n/g,' '));
   Chart.getChart('iceChart')?.destroy();
   new Chart(document.getElementById('iceChart'), {
     type:'bar',
     data:{
-      labels: scored.map(x=>(x.ep||'')+' '+(x.name||'').replace(/\n/g,' ').slice(0,22)),
+      labels: iceLabels,
       datasets:[{
         data: scored.map(x=>x.score_num),
         backgroundColor: PALETTE.strawberry,
@@ -115,7 +128,7 @@ try{
             if(['100','1000','10000','100000','1000000','10000000','100000000','1000000000','10000000000','100000000000'].includes(s)) return fmtScore(v);
             return null;
           }}, grid:{color:'rgba(74,46,35,0.08)'}},
-        y:{grid:{display:false}, ticks:{font:{size:11}}}
+        y:{grid:{display:false}, ticks:{font:{size:11}, callback:(val,idx)=>wrapLabel(iceLabels[idx], 13, 2)}}
       }
     }
   });
@@ -162,7 +175,7 @@ try{
       indexAxis:'y',
       layout:{padding:{right:28}},
       plugins:{legend:{display:false}},
-      scales:{x:{grid:{color:'rgba(74,46,35,0.08)'}}, y:{grid:{display:false}, ticks:{font:{size:11}}}}
+      scales:{x:{grid:{color:'rgba(74,46,35,0.08)'}}, y:{grid:{display:false}, ticks:{font:{size:11}, callback:(val,idx)=>wrapLabel(labels[idx], 9, 2)}}}
     },
     plugins:[cornerValueLabels]
   });

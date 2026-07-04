@@ -173,8 +173,8 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
 .chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;}
 .chart-scroll-inner{height:100%;}
 @media (max-width:700px){
-  .chart-scroll-inner.corner{min-width:620px;}
-  .chart-scroll-inner.ice{min-width:680px;}
+  .chart-scroll-inner.corner{min-width:420px;}
+  .chart-scroll-inner.ice{min-width:460px;}
 }
 
 /* ---------- QUIZ STATS ---------- */
