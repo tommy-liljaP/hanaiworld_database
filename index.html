@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>はないわーるど まるごと記録帖</title>
+<meta name="description" content="「はないわーるど」の配信ノートを集計・可視化したファン制作のまとめダッシュボード。全話アーカイブ、アイス採点ランキング、コーナー出現数などを収録。">
+
+<!-- Open Graph / Facebook, LINE, Discord など -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="はないわーるど まるごと記録帖">
+<meta property="og:title" content="はないわーるど まるごと記録帖">
+<meta property="og:description" content="「はないわーるど」の配信ノートを集計・可視化したファン制作のまとめダッシュボード。全話アーカイブ、アイス採点ランキング、コーナー出現数などを収録。">
+<meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/hanaiworld_database.jpg">
+<meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/">
+<meta property="og:locale" content="ja_JP">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="はないわーるど まるごと記録帖">
+<meta name="twitter:description" content="「はないわーるど」の配信ノートを集計・可視化したファン制作のまとめダッシュボード。全話アーカイブ、アイス採点ランキング、コーナー出現数などを収録。">
+<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/hanaiworld_database.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Zen+Maru+Gothic:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Fan Archive Dashboard</span>
+    <h1>はないわーるど<br><span class="accent">まるごと記録帖</span></h1>
+    <p class="lede">毎週のアイス実況、あいうえおリアクション、叶えたい妄想トークまで。配信ノートを数えて、並べて、グラフにしてみました。</p>
+    <div class="stat-strip" id="heroStats"></div>
+    <div id="syncStatus" class="sync-status loading">🔄 最新のExcelデータを確認中…</div>
+  </div>
+</section>
+
+<nav class="toc-nav">
+  <div class="toc-bar">
+    <span class="toc-edge" id="edgeSakura" aria-hidden="true">🌸</span>
+    <div class="toc-inner">
+      <a href="#sec-archive">📚 全話アーカイブ</a>
+      <a href="#sec-gojuon">🔤 リアクションマップ</a>
+      <a href="#sec-ice">🍦 今週のアイス</a>
+      <a href="#sec-corner">📊 コーナー分布</a>
+      <a href="#sec-char">💭 キャラランキング</a>
+      <a href="#sec-quiz">📝 おじさん構文</a>
+    </div>
+    <span class="toc-edge" id="edgeRock">🪨</span>
+  </div>
+</nav>
+
+<section class="block" id="sec-archive">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Full Archive</span>
+      <h2>全話アーカイブ</h2>
+      <p>キーワードやコーナーで絞り込めます。各回をクリックすると、備考欄などの詳細が見られます。</p>
+    </div>
+    <div class="archive-controls">
+      <input type="text" id="searchBox" placeholder="タイトル・アイス・ゲスト名などで検索…">
+      <select id="cornerFilter"></select>
+    </div>
+    <div id="epCount"></div>
+    <div class="ep-list" id="epList"></div>
+    <div id="emptyState">該当する回が見つかりませんでした。</div>
+  </div>
+</section>
+
+<section class="block" id="sec-gojuon">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Reaction Map</span>
+      <h2>リアクションあいうえお 頻出度マップ</h2>
+      <p>「リアクションのあいうえお」コーナーで登場した行を、五十音表そのままの並びで色の濃さにしてみました。</p>
+    </div>
+    <div class="gojuon-grid" id="gojuonGrid"></div>
+    <p class="goj-note">色が濃いほど登場回数が多い行。数字は登場回数（合計 <span id="reactTotal" class="mono"></span> 回）。</p>
+  </div>
+</section>
+
+<section class="block" id="sec-ice">
+  <div class="wrap wide">
+    <div class="section-head">
+      <span class="tag">Weekly Ice Cream</span>
+      <h2>今週のアイス スコア列伝</h2>
+      <p>採点は本人の完全な独自基準（単位：点、億点、兆点…）。とりあえず一番おかしかった3つと、点がついた回の上位ランキングを並べます。</p>
+    </div>
+    <div class="grid-3" id="iceHighlights"></div>
+    <div class="chart-card" style="margin-top:28px;">
+      <h3>点数がついた回の得点ランキング（対数目盛り）</h3>
+      <div class="chart-wrap tall"><canvas id="iceChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sec-corner">
+  <div class="wrap wide">
+    <div class="section-head">
+      <span class="tag">Corner Frequency</span>
+      <h2>コーナー出現数と月ごとの推移</h2>
+      <p>全<span id="cornerEpCount" class="mono"></span>回のうち、それぞれのコーナーが何回登場したか。</p>
+    </div>
+    <div class="chart-card">
+      <h3>コーナー別 総登場回数</h3>
+      <div class="chart-wrap"><canvas id="cornerChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>月別トレンド（主要4コーナー）</h3>
+      <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sec-char">
+  <div class="wrap wide">
+    <div class="section-head">
+      <span class="tag">Character Wishlist</span>
+      <h2>「花岩香奈は叶えたい！」キャラ登場ランキング</h2>
+      <p>コーナー内で挙がったキャラ属性の出現回数。</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-wrap tall"><canvas id="charChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sec-quiz">
+  <div class="wrap wide">
+    <div class="section-head">
+      <span class="tag">Ojisan Bunpo Score</span>
+      <h2>「これ知ってるカナ！？」おじさん構文 採点記録</h2>
+      <p>話題ごとに採点された「おじさん構文」評価点の分布。</p>
+    </div>
+    <div class="quiz-stats" id="quizStats"></div>
+    <div class="chart-card">
+      <h3>点数の分布</h3>
+      <div class="chart-wrap short"><canvas id="quizChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  はないわーるど まるごと記録帖 — 個人でまとめたファンアーカイブです。データはアップロードされたスプレッドシートに基づきます。
+</footer>
+
+<div id="detailOverlay" class="detail-overlay" aria-hidden="true">
+  <div class="detail-backdrop" data-close></div>
+  <div class="detail-panel" role="dialog" aria-modal="true">
+    <button class="detail-close" data-close>← 一覧に戻る</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script src="vendor/chart.min.js"></script>
+<script src="vendor/xlsx.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
