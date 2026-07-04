@@ -128,6 +128,22 @@ try{
   document.getElementById('cornerEpCount').textContent = DATA.episodes.length;
   const totals = DATA.corner_totals;
   const labels = Object.keys(totals);
+  const cornerValueLabels = {
+    id: 'cornerValueLabels',
+    afterDatasetsDraw(chart){
+      const {ctx} = chart;
+      const meta = chart.getDatasetMeta(0);
+      ctx.save();
+      ctx.fillStyle = PALETTE.cocoa;
+      ctx.font = "500 11px 'DM Mono', monospace";
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      meta.data.forEach((bar, i) => {
+        ctx.fillText(chart.data.datasets[0].data[i], bar.x + 8, bar.y);
+      });
+      ctx.restore();
+    }
+  };
   Chart.getChart('cornerChart')?.destroy();
   new Chart(document.getElementById('cornerChart'), {
     type:'bar',
@@ -144,9 +160,11 @@ try{
       maintainAspectRatio:false,
       responsive:true,
       indexAxis:'y',
+      layout:{padding:{right:28}},
       plugins:{legend:{display:false}},
       scales:{x:{grid:{color:'rgba(74,46,35,0.08)'}}, y:{grid:{display:false}, ticks:{font:{size:11}}}}
-    }
+    },
+    plugins:[cornerValueLabels]
   });
 
   const months = DATA.monthly_corners.map(m=>m.month);

@@ -170,6 +170,13 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
   .chart-card .chart-wrap.short{height:400px;}
 }
 
+.chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.chart-scroll-inner{height:100%;}
+@media (max-width:700px){
+  .chart-scroll-inner.corner{min-width:620px;}
+  .chart-scroll-inner.ice{min-width:680px;}
+}
+
 /* ---------- QUIZ STATS ---------- */
 .quiz-stats{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:900px; margin:0 auto 26px;}
 .qs-item{
