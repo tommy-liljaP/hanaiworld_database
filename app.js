@@ -457,6 +457,22 @@ function renderAll(){
 }
 renderAll();
 
+document.querySelectorAll('.chart-wrap').forEach(wrap => {
+  const scroller = wrap.querySelector('.chart-scroll');
+  const hint = wrap.querySelector('.chart-scroll-hint');
+  if(!scroller || !hint) return;
+  function check(){
+    const overflowing = scroller.scrollWidth > scroller.clientWidth + 4;
+    hint.style.display = overflowing ? '' : 'none';
+    const atEnd = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4;
+    hint.classList.toggle('faded', atEnd || scroller.scrollLeft > 12);
+    wrap.classList.toggle('scrolled-end', atEnd);
+  }
+  scroller.addEventListener('scroll', check, {passive:true});
+  window.addEventListener('resize', check);
+  check();
+});
+
 (function(){
   let rockClicks = 0;
   const rock = document.getElementById('edgeRock');

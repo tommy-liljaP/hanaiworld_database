@@ -170,12 +170,28 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
   .chart-card .chart-wrap.short{height:400px;}
 }
 
-.chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;}
 .chart-scroll-inner{height:100%;}
+.chart-scroll-hint{display:none;}
 @media (max-width:700px){
   .chart-scroll-inner.corner{min-width:420px;}
   .chart-scroll-inner.ice{min-width:460px;}
+  .chart-wrap{position:relative;}
+  .chart-scroll-hint{
+    display:inline-flex; position:absolute; top:-34px; right:0; z-index:5;
+    font-family:'DM Mono',monospace; font-size:.68rem; color:var(--strawberry-deep);
+    background:var(--cream-deep); padding:4px 10px; border-radius:999px;
+    animation:hintNudge 1.6s ease-in-out infinite; transition:opacity .3s ease;
+  }
+  .chart-scroll-hint.faded{opacity:0;}
+  .chart-wrap::after{
+    content:''; position:absolute; top:0; right:0; bottom:0; width:28px;
+    background:linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9));
+    pointer-events:none; z-index:4; transition:opacity .3s ease;
+  }
+  .chart-wrap.scrolled-end::after{opacity:0;}
 }
+@keyframes hintNudge{0%,100%{transform:translateX(0);} 50%{transform:translateX(4px);}}
 
 /* ---------- QUIZ STATS ---------- */
 .quiz-stats{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:900px; margin:0 auto 26px;}
