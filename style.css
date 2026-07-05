@@ -178,9 +178,9 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
   .chart-scroll-inner.ice{min-width:460px;}
   .chart-wrap{position:relative;}
   .chart-scroll-hint{
-    display:inline-flex; position:absolute; top:-24px; right:0; z-index:5;
+    display:inline-flex; position:absolute; top:6px; right:6px; z-index:5;
     font-family:'DM Mono',monospace; font-size:.68rem; color:var(--strawberry-deep);
-    background:var(--cream-deep); padding:4px 10px; border-radius:999px;
+    background:rgba(255,255,255,0.92); box-shadow:var(--shadow); padding:4px 10px; border-radius:999px;
     animation:hintNudge 1.6s ease-in-out infinite; transition:opacity .3s ease;
   }
   .chart-scroll-hint.faded{opacity:0;}
