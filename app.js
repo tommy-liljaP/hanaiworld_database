@@ -180,7 +180,12 @@ try{
     plugins:[cornerValueLabels]
   });
 
-  const months = DATA.monthly_corners.map(m=>m.month);
+  const lastEpDate = DATA.episodes.map(e=>e.date).filter(Boolean).sort().pop();
+  const lastEpMonth = lastEpDate ? lastEpDate.slice(2,4) + '/' + lastEpDate.slice(5,7) : null;
+  const monthlyTrimmed = lastEpMonth
+    ? DATA.monthly_corners.filter(m => m.month <= lastEpMonth)
+    : DATA.monthly_corners;
+  const months = monthlyTrimmed.map(m=>m.month);
   const keys = ['今週のアイス','花岩香奈は叶えたい！','リアクションのあいうえお','これ知ってるカナ！？'];
   const colors = [PALETTE.strawberry, PALETTE.mint, PALETTE.lavender, PALETTE.gold];
   Chart.getChart('monthlyChart')?.destroy();
@@ -190,7 +195,7 @@ try{
       labels: months,
       datasets: keys.map((k,i)=>({
         label:k,
-        data: DATA.monthly_corners.map(m=>m[k]||0),
+        data: monthlyTrimmed.map(m=>m[k]||0),
         backgroundColor: colors[i],
         borderRadius:4,
         maxBarThickness:38,

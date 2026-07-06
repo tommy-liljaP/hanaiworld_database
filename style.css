@@ -176,6 +176,8 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
 @media (max-width:700px){
   .chart-scroll-inner.corner{min-width:420px;}
   .chart-scroll-inner.ice{min-width:460px;}
+  .chart-scroll-inner.monthly{min-width:560px;}
+  .chart-scroll-inner.char{min-width:420px;}
   .chart-wrap{position:relative;}
   .chart-scroll-hint{
     display:inline-flex; position:absolute; top:6px; right:6px; z-index:5;
