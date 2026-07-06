@@ -172,6 +172,15 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
 
 .chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;}
 .chart-scroll-inner{height:100%;}
+.monthly-flex{display:flex; height:100%;}
+.monthly-axis{width:34px; flex-shrink:0; height:100%;}
+.chart-legend{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:12px;
+}
+.chart-legend .legend-item{
+  display:inline-flex; align-items:center; gap:6px; font-size:.78rem; color:var(--cocoa-soft);
+}
+.chart-legend .legend-dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
 .chart-scroll-hint{display:none;}
 @media (max-width:700px){
   .chart-scroll-inner.corner{min-width:420px;}
