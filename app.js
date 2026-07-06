@@ -188,14 +188,6 @@ try{
   const months = monthlyTrimmed.map(m=>m.month);
   const keys = ['今週のアイス','花岩香奈は叶えたい！','リアクションのあいうえお','これ知ってるカナ！？'];
   const colors = [PALETTE.strawberry, PALETTE.mint, PALETTE.lavender, PALETTE.gold];
-
-  const monthlyLegendEl = document.getElementById('monthlyLegend');
-  if(monthlyLegendEl){
-    monthlyLegendEl.innerHTML = keys.map((k,i)=>`
-      <span class="legend-item"><span class="legend-dot" style="background:${colors[i]}"></span>${k}</span>
-    `).join('');
-  }
-
   Chart.getChart('monthlyChart')?.destroy();
   new Chart(document.getElementById('monthlyChart'), {
     type:'bar',
@@ -212,36 +204,10 @@ try{
     options:{
       maintainAspectRatio:false,
       responsive:true,
-      layout:{padding:{top:10}},
-      plugins:{legend:{display:false}},
+      plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:11}}}},
       scales:{
         x:{stacked:true, grid:{display:false}},
-        y:{stacked:true, beginAtZero:true, grid:{color:'rgba(74,46,35,0.08)'}, ticks:{display:false}}
-      }
-    }
-  });
-
-  Chart.getChart('monthlyAxisChart')?.destroy();
-  new Chart(document.getElementById('monthlyAxisChart'), {
-    type:'bar',
-    data:{
-      labels: months,
-      datasets: keys.map((k,i)=>({
-        label:k,
-        data: monthlyTrimmed.map(m=>m[k]||0),
-        backgroundColor: 'transparent',
-        borderWidth:0,
-      }))
-    },
-    options:{
-      maintainAspectRatio:false,
-      responsive:true,
-      animation:false,
-      layout:{padding:{top:10, bottom:3}},
-      plugins:{legend:{display:false}, tooltip:{enabled:false}},
-      scales:{
-        x:{stacked:true, grid:{display:false}, ticks:{color:'transparent', font:{size:11}}},
-        y:{stacked:true, beginAtZero:true, grid:{display:false}, ticks:{font:{size:11}}}
+        y:{stacked:true, beginAtZero:true, grid:{color:'rgba(74,46,35,0.08)'}}
       }
     }
   });
