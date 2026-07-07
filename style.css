@@ -173,7 +173,7 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
 .chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;}
 .chart-scroll-inner{height:100%;}
 .monthly-flex{display:flex; height:100%;}
-.monthly-axis{width:34px; flex-shrink:0; height:100%;}
+.monthly-axis{width:54px; flex-shrink:0; height:100%;}
 .chart-legend{
   display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:12px;
 }
