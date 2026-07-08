@@ -346,7 +346,7 @@ try{
     const filtered = eps.filter(e=>{
       if(cf && !e.corners[cf]) return false;
       if(!q) return true;
-      const hay = [e.title,e.ice,e.guest,e.special,e.memo,e.aiueo,e.wish_chara,e.voice_info,e.iwa_detail].filter(Boolean).join(' ').toLowerCase();
+      const hay = [e.ep,e.title,e.ice,e.guest,e.special,e.memo,e.aiueo,e.wish_chara,e.voice_info,e.iwa_detail].filter(Boolean).join(' ').toLowerCase();
       return hay.includes(q);
     });
     document.getElementById('epCount').textContent = `${filtered.length} / ${eps.length} 回を表示`;
