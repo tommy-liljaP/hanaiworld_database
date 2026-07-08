@@ -170,7 +170,7 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
   .chart-card .chart-wrap.short{height:400px;}
 }
 
-.chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;}
+.chart-scroll{height:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative; flex:1; min-width:0;}
 .chart-scroll-inner{height:100%;}
 .monthly-flex{display:flex; height:100%;}
 .monthly-axis{width:54px; flex-shrink:0; height:100%;}
@@ -185,7 +185,7 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
 @media (max-width:700px){
   .chart-scroll-inner.corner{min-width:420px;}
   .chart-scroll-inner.ice{min-width:460px;}
-  .chart-scroll-inner.monthly{min-width:560px;}
+  .chart-scroll-inner.monthly{min-width:620px;}
   .chart-scroll-inner.char{min-width:420px;}
   .chart-wrap{position:relative;}
   .chart-scroll-hint{

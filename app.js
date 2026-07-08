@@ -215,7 +215,7 @@ try{
       layout:{padding:{top:10}},
       plugins:{legend:{display:false}},
       scales:{
-        x:{stacked:true, grid:{display:false}},
+        x:{stacked:true, grid:{display:false}, ticks:{autoSkip:false, maxRotation:0, minRotation:0}},
         y:{stacked:true, beginAtZero:true, grid:{color:'rgba(74,46,35,0.08)'}, ticks:{display:false}}
       }
     }
@@ -240,7 +240,7 @@ try{
       layout:{padding:{top:10, bottom:3}},
       plugins:{legend:{display:false}, tooltip:{enabled:false}},
       scales:{
-        x:{stacked:true, grid:{display:false}, ticks:{color:'transparent', font:{size:11}}},
+        x:{stacked:true, grid:{display:false}, ticks:{color:'transparent', font:{size:11}, autoSkip:false, maxRotation:0, minRotation:0}},
         y:{stacked:true, beginAtZero:true, grid:{display:false}, ticks:{font:{size:11}}}
       }
     }
