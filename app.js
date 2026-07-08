@@ -625,7 +625,7 @@ function buildDataFromWorkbook(wb){
       guest: cleanVal(get(row,'ゲスト')),
       special: cleanVal(get(row,'特別企画')),
       memo: cleanVal(get(row,'メモ')),
-      onomatopoeia: cleanVal(get(row,'オノマトペ')),
+      onomatopoeia: cleanVal(get(row,'はないわーるどオノマトペ')),
       chichibu: cleanVal(get(row,'秩父情報')),
       voice_info: cleanVal(get(row,'○○声優/いわ情報')),
       iwa_detail: cleanVal(get(row,'いわ情報詳細')),
