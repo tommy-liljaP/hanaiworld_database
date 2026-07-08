@@ -325,7 +325,7 @@ const REMARK_FIELDS = [
   {key:'iwa_detail', label:'いわ情報詳細'},
   {key:'wish_chara', label:'叶えたいキャラ'},
   {key:'letter', label:'おたより採用'},
-  {key:'onomatopoeia', label:'はないわーるどオノマトペ'},
+  {key:'onomatopoeia', label:'オノマトペ'},
   {key:'chichibu', label:'秩父情報'},
   {key:'memo', label:'備考'},
 ];
@@ -625,7 +625,7 @@ function buildDataFromWorkbook(wb){
       guest: cleanVal(get(row,'ゲスト')),
       special: cleanVal(get(row,'特別企画')),
       memo: cleanVal(get(row,'メモ')),
-      onomatopoeia: cleanVal(get(row,'オノマトペ')),
+      onomatopoeia: cleanVal(get(row,'はないわーるどオノマトペ')),
       chichibu: cleanVal(get(row,'秩父情報')),
       voice_info: cleanVal(get(row,'○○声優/いわ情報')),
       iwa_detail: cleanVal(get(row,'いわ情報詳細')),
