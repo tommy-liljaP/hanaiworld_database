@@ -410,8 +410,9 @@ try{
       const card = ev.target.closest('.ep-card');
       if(!card) return;
       lockScroll();
-      setHashSilently('ep-' + (parseInt(card.dataset.idx, 10) + 1));
-      showDetail(parseInt(card.dataset.idx, 10));
+      const idx = parseInt(card.dataset.idx, 10);
+      setHashSilently('ep-' + (idx + 1));
+      showDetail(idx);
     });
 
     const overlay = document.getElementById('detailOverlay');
@@ -469,8 +470,8 @@ ${e.aiueo ? `<div class="detail-section"><span class="dt-label">リアクショ�
     }
 
     function syncFromHash(){
-      const m = location.hash.match(/^#ep-(\d+)$/);
-      if(m){showDetail(parseInt(m[1],10) - 1);} else { hideDetail(); }
+    const m = location.hash.match(/^#ep-(\d+)$/);
+    if(m){showDetail(parseInt(m[1],10) - 1);}else{hideDetail();}
     }
     window.addEventListener('popstate', syncFromHash);
     overlay.addEventListener('click', (ev)=>{
