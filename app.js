@@ -410,7 +410,7 @@ try{
       const card = ev.target.closest('.ep-card');
       if(!card) return;
       lockScroll();
-      setHashSilently('ep-' + card.dataset.idx);
+      setHashSilently('ep-' + (parseInt(card.dataset.idx, 10) + 1));
       showDetail(parseInt(card.dataset.idx, 10));
     });
 
@@ -470,7 +470,7 @@ ${e.aiueo ? `<div class="detail-section"><span class="dt-label">リアクショ�
 
     function syncFromHash(){
       const m = location.hash.match(/^#ep-(\d+)$/);
-      if(m){ showDetail(parseInt(m[1],10)); } else { hideDetail(); }
+      if(m){showDetail(parseInt(m[1],10) - 1);} else { hideDetail(); }
     }
     window.addEventListener('popstate', syncFromHash);
     overlay.addEventListener('click', (ev)=>{
