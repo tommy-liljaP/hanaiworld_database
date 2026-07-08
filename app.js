@@ -634,7 +634,7 @@ function buildDataFromWorkbook(wb){
       corners
     });
   }
-  if(episodes.length === 0) throw new Error('全まとめシートから回を読み取れませんでした');
+  if(episodes.length === 0) throw new Error('データを読み取れませんでした');
 
   // ---- 今週のアイスまとめ (fixed positions) ----
   const iceGrid = sheetGrid(wb, '今週のアイスまとめ');
@@ -752,10 +752,10 @@ async function fetchXlsxData(){
     renderAll();
     const n = newData.episodes.length;
     const last = newData.episodes[n-1];
-    setSyncStatus(`✅ 最新のExcelデータを反映しました（全${n}話 / 最新: ${last.ep} ${last.date||''}）`, 'live');
+    setSyncStatus(`✅ データを反映しました（全${n}話 / 最新: ${last.ep} ${last.date||''}）`, 'live');
   }catch(e){
     console.warn('xlsx live sync failed, showing embedded snapshot instead:', e);
-    setSyncStatus('⚠️ Excelファイル（' + XLSX_FILENAME + '）を取得できなかったため、保存済みのデータを表示しています', 'offline');
+    setSyncStatus('⚠️ データの更新中です。 時間を空けて再度ページを更新してください。', 'offline');
   }
 })();
 
