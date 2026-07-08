@@ -325,7 +325,7 @@ const REMARK_FIELDS = [
   {key:'iwa_detail', label:'いわ情報詳細'},
   {key:'wish_chara', label:'叶えたいキャラ'},
   {key:'letter', label:'おたより採用'},
-  {key:'onomatopoeia', label:'オノマトペ'},
+  {key:'onomatopoeia', label:'はないわーるどオノマトペ'},
   {key:'chichibu', label:'秩父情報'},
   {key:'memo', label:'備考'},
 ];
