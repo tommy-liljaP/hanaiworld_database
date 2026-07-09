@@ -411,7 +411,7 @@ try{
       if(!card) return;
       lockScroll();
       const idx = parseInt(card.dataset.idx, 10);
-      setHashSilently('ep-' + (idx + 1));
+      setHashSilently(DATA.episodes[idx].hash);
       showDetail(idx);
     });
 
@@ -470,8 +470,9 @@ ${e.aiueo ? `<div class="detail-section"><span class="dt-label">リアクショ�
     }
 
     function syncFromHash(){
-    const m = location.hash.match(/^#ep-(\d+)$/);
-    if(m){showDetail(parseInt(m[1],10) - 1);}else{hideDetail();}
+    const hash = location.hash.replace(/^#/, '');
+    const idx = DATA.episodes.findIndex(e => e.hash === hash);
+    if(idx >= 0){showDetail(idx);}else{hideDetail();}
     }
     window.addEventListener('popstate', syncFromHash);
     overlay.addEventListener('click', (ev)=>{
@@ -608,6 +609,7 @@ function buildDataFromWorkbook(wb){
   const get = (row, name) => (colIdx[name]!=null) ? row[colIdx[name]] : undefined;
 
   const episodes = [];
+  let spNo = 1;
   for(let r=2; r<mainGrid.length; r++){
     const row = mainGrid[r] || [];
     const hasContent = [TITLE_KEY,'今週のアイス','あいうえお','ゲスト','特別企画','メモ']
@@ -615,8 +617,12 @@ function buildDataFromWorkbook(wb){
     if(!hasContent) continue;
     const corners = {};
     cornerCols.forEach(c=>{ corners[c] = !!get(row,c); });
+    const epText = cleanVal(get(row,'回'));
+    let hash;
+    const m = String(epText).match(/^#(\d+)$/);
+    if (m) {hash = `ep-${m[1].padStart(2, '0')}`;} else {hash = `sp-${String(spNo).padStart(2, '0')}`;spNo++;}
     episodes.push({
-      ep: cleanVal(get(row,'回')),
+      ep: epText,hash,
       date: toDateStr(get(row,'日付')),
       title: cleanVal(get(row,TITLE_KEY)),
       ice: cleanVal(get(row,'今週のアイス')),
