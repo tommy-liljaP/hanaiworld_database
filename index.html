@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>はないわーるど まるごと記録帖</title>
-<meta name="description" content="「はないわーるど」の配信ノートを集計・可視化したファン制作のまとめダッシュボード。全話アーカイブ、アイス採点ランキング、コーナー出現数などを収録。">
+<title>はないわーるど Data Lab</title>
+<meta name="description" content="「はないわーるど」の各配信回を記録・可視化したファン制作のデータベースサイト。各回の詳細、今週のアイス、各コーナーのデータを収録。">
 
 <!-- Open Graph / Facebook, LINE, Discord など -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="はないわーるど まるごと記録帖">
-<meta property="og:title" content="はないわーるど まるごと記録帖">
-<meta property="og:description" content="「はないわーるど」の配信ノートを集計・可視化したファン制作のまとめダッシュボード。全話アーカイブ、アイス採点ランキング、コーナー出現数などを収録。">
+<meta property="og:site_name" content="はないわーるど Data Lab">
+<meta property="og:title" content="はないわーるど Data Lab">
+<meta property="og:description" content="「はないわーるど」の各配信回を記録・可視化したファン制作のデータベースサイト。各回の詳細、今週のアイス、各コーナーのデータを収録。">
 <meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/hanaiworld_database.jpg">
 <meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/">
 <meta property="og:locale" content="ja_JP">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="はないわーるど まるごと記録帖">
-<meta name="twitter:description" content="「はないわーるど」の配信ノートを集計・可視化したファン制作のまとめダッシュボード。全話アーカイブ、アイス採点ランキング、コーナー出現数などを収録。">
+<meta name="twitter:title" content="はないわーるど Data Lab">
+<meta name="twitter:description" content="「はないわーるど」の各配信回を記録・可視化したファン制作のデータベースサイト。各回の詳細、今週のアイス、各コーナーのデータを収録。">
 <meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/hanaiworld_database.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,10 +32,10 @@
 <section class="hero">
   <div class="wrap">
     <span class="eyebrow">Fan Archive Dashboard</span>
-    <h1>はないわーるど<br><span class="accent">まるごと記録帖</span></h1>
-    <p class="lede">毎週のアイス実況、あいうえおリアクション、叶えたい妄想トークまで。配信ノートを数えて、並べて、グラフにしてみました。</p>
+    <h1>はないわーるど<br><span class="accent">Data Lab</span></h1>
+    <p class="lede">「はないわーるど」の各配信回を記録・可視化したファン制作のデータベースサイト。各回の詳細、今週のアイス、各コーナーのデータを収録。</p>
     <div class="stat-strip" id="heroStats"></div>
-    <div id="syncStatus" class="sync-status loading">🔄 最新のExcelデータを確認中…</div>
+    <div id="syncStatus" class="sync-status loading">🔄 最新のデータを読込中…</div>
   </div>
 </section>
 
@@ -44,10 +44,10 @@
     <span class="toc-edge" id="edgeSakura" aria-hidden="true">🌸</span>
     <div class="toc-inner">
       <a href="#sec-archive">📚 全話アーカイブ</a>
-      <a href="#sec-gojuon">🔤 反応マップ</a>
+      <a href="#sec-gojuon">🔤 リアクションマップ</a>
       <a href="#sec-ice">🍦 今週のアイス</a>
       <a href="#sec-corner">📊 コーナー分布</a>
-      <a href="#sec-char">💭 キャラ人気</a>
+      <a href="#sec-char">💭 叶えたい！キャラ</a>
       <a href="#sec-quiz">📝 おじさん構文</a>
     </div>
     <span class="toc-edge" id="edgeRock">🪨</span>
@@ -59,7 +59,7 @@
     <div class="section-head">
       <span class="tag">Full Archive</span>
       <h2>全話アーカイブ</h2>
-      <p>キーワードやコーナーで絞り込めます。各回をクリックすると、備考欄などの詳細が見られます。</p>
+      <p>キーワードやコーナーで絞り込めます。各回をクリックすると、詳細が見られます。</p>
     </div>
     <div class="archive-controls">
       <input type="text" id="searchBox" placeholder="タイトル・アイス・ゲスト名などで検索…">
@@ -75,8 +75,8 @@
   <div class="wrap">
     <div class="section-head">
       <span class="tag">Reaction Map</span>
-      <h2>リアクションあいうえお 頻出度マップ</h2>
-      <p>「リアクションのあいうえお」コーナーで登場した行を、五十音表そのままの並びで色の濃さにしてみました。</p>
+      <h2>リアクションのあいうえお 頻出度マップ</h2>
+      <p>「リアクションのあいうえお」コーナーで登場した行を、色の濃さにして表しました。</p>
     </div>
     <div class="gojuon-grid" id="gojuonGrid"></div>
     <p class="goj-note">色が濃いほど登場回数が多い行。数字は登場回数（合計 <span id="reactTotal" class="mono"></span> 回）。</p>
@@ -88,7 +88,7 @@
     <div class="section-head">
       <span class="tag">Weekly Ice Cream</span>
       <h2>今週のアイス スコア列伝</h2>
-      <p>採点は本人の完全な独自基準（単位：点、億点、兆点…）。とりあえず一番おかしかった3つと、点がついた回の上位ランキングを並べます。</p>
+      <p>採点は本人の完全な独自基準。(もはや意味をなさない)代表値3つと、点がついた回の上位ランキングを並べました。</p>
     </div>
     <div class="grid-3" id="iceHighlights"></div>
     <div class="chart-card" style="margin-top:28px;">
@@ -103,7 +103,7 @@
     <div class="section-head">
       <span class="tag">Corner Frequency</span>
       <h2>コーナー出現数と月ごとの推移</h2>
-      <p>全<span id="cornerEpCount" class="mono"></span>回のうち、それぞれのコーナーが何回登場したか。</p>
+      <p>全<span id="cornerEpCount" class="mono"></span>回のうち、それぞれのコーナーが何回登場したか、月ごとにどれだけ登場したかをまとめました。</p>
     </div>
     <div class="chart-card">
       <h3>コーナー別 総登場回数</h3>
@@ -122,7 +122,7 @@
     <div class="section-head">
       <span class="tag">Character Wishlist</span>
       <h2>「花岩香奈は叶えたい！」キャラ登場ランキング</h2>
-      <p>コーナー内で挙がったキャラ属性の出現回数。</p>
+      <p>コーナー内で演じたキャラ属性の出現回数。</p>
     </div>
     <div class="chart-card">
       <div class="chart-wrap tall"><div class="chart-scroll-hint">👉 横にスクロールできます</div><div class="chart-scroll"><div class="chart-scroll-inner char"><canvas id="charChart"></canvas></div></div></div>
@@ -133,9 +133,9 @@
 <section class="block" id="sec-quiz">
   <div class="wrap wide">
     <div class="section-head">
-      <span class="tag">Ojisan Bunpo Score</span>
-      <h2>「これ知ってるカナ！？」おじさん構文 採点記録</h2>
-      <p>話題ごとに採点された「おじさん構文」評価点の分布。</p>
+      <span class="tag">Ojisan Syntax Score</span>
+      <h2>「これ知ってるカナ！？」<br>おじさん構文 採点記録</h2>
+      <p>採点された「おじさん構文」の代表値📊と評価点の分布を、ｵｼﾞｻﾝなりにまとめてみたヨ〜😆💦 気になったら見てネ👍✨（笑）</p>
     </div>
     <div class="quiz-stats" id="quizStats"></div>
     <div class="chart-card">
@@ -147,7 +147,7 @@
 
 
 <footer>
-  はないわーるど まるごと記録帖 — 個人でまとめたファンアーカイブです。データはアップロードされたスプレッドシートに基づきます。
+  はないわーるど Data Lab — ファン個人の記録に基づいた"非公式"のデータベースサイトです。ご本人様や所属事務所、公式運営とは一切関係ありません。公式へのお問い合わせはご遠慮いただきますようお願いいたします。
 </footer>
 
 <div id="detailOverlay" class="detail-overlay" aria-hidden="true">
