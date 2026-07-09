@@ -320,6 +320,17 @@ try{
 }
 
 /* ---------- EPISODE ARCHIVE ---------- */
+  function renderAiueoSection(aiueoVal){
+    if(!aiueoVal) return '';
+    const lines = String(aiueoVal).split(/\r?\n/);
+    const first = lines[0].trim();
+    const isTag = /^<.*>$/.test(first);
+    const tagHtml = isTag ? `<div style="margin-top:6px;"><span class="badge on">${first}</span></div>` : '';
+    const restLines = (isTag ? lines.slice(1) : lines).join('\n');
+    const valHtml = restLines ? `<div class="dt-val">${restLines}</div>` : '';
+    return `<div class="detail-section"><span class="dt-label">リアクションのあいうえお</span>${tagHtml}${valHtml}</div>`;
+  }
+
   const REMARK_FIELDS = [
     {key:'voice_info', label:'声優/いわ情報'},
     {key:'iwa_detail', label:'いわ情報詳細'},
@@ -449,7 +460,7 @@ try{
           ${e.url? `<a class="listen-link" href="${e.url}" target="_blank" rel="noopener noreferrer">▶ この回を聴く</a>` : ''}
         </div>
         ${iceHtml}
-${e.aiueo ? `<div class="detail-section"><span class="dt-label">リアクションのあいうえお</span><div class="dt-val">${String(e.aiueo).replace(/\n/g,'\n')}</div></div>` : ''}
+${renderAiueoSection(e.aiueo)}
         ${e.ojisan? `<div class="detail-section"><span class="dt-label">おじさん構文評価</span><div class="dt-val">${e.ojisan.replace(/\n/g,'\n')}</div></div>`:''}
         ${remarksBlock}
         <div class="detail-badges badge-row">${badges}${guestBadge}${specialBadge}</div>
