@@ -201,6 +201,7 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
     pointer-events:none; z-index:4; transition:opacity .3s ease;
   }
   .chart-wrap.scrolled-end::after{opacity:0;}
+  .badge.on.aiueo-tag{background:#FF6F91;}
 }
 @keyframes hintNudge{0%,100%{transform:translateX(0);} 50%{transform:translateX(4px);}}
 
