@@ -201,7 +201,6 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
     pointer-events:none; z-index:4; transition:opacity .3s ease;
   }
   .chart-wrap.scrolled-end::after{opacity:0;}
-  .badge.on.aiueo-tag{background:#FF6F91;}
 }
 @keyframes hintNudge{0%,100%{transform:translateX(0);} 50%{transform:translateX(4px);}}
 
@@ -251,6 +250,7 @@ section.block:nth-of-type(even){background:var(--cream-deep);}
   border:1px solid var(--line); color:var(--cocoa-soft);
 }
 .badge.on{background:var(--mint); color:#fff; border-color:var(--mint-deep);}
+.badge.on.aiueo-tag{background:#FF6F91;}
 .badge.guest{background:var(--lavender); color:#fff; border-color:var(--lavender);}
 .badge.special{background:var(--gold); color:#fff; border-color:var(--gold);}
 #emptyState{text-align:center; color:var(--cocoa-soft); padding:40px 0; display:none;}
