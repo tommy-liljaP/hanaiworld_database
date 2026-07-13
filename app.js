@@ -583,12 +583,24 @@ function cleanVal(v){
 }
 function toDateStr(v){
   if(v === undefined || v === null) return null;
+
   let d;
-  if(v instanceof Date) d = v;
-  else if(typeof v === 'number') d = new Date(Math.round((v - 25569) * 86400 * 1000));
-  else return null;
+  if(v instanceof Date){
+    d = v;
+  }else if(typeof v === 'number'){
+    d = XLSX.SSF.parse_date_code(v);
+    if(!d) return null;
+    return `${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`;
+  }else{
+    return null;
+  }
+
   if(isNaN(d.getTime())) return null;
-  const y = d.getUTCFullYear(), m = String(d.getUTCMonth()+1).padStart(2,'0'), day = String(d.getUTCDate()).padStart(2,'0');
+
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+
   return `${y}-${m}-${day}`;
 }
 function numOrNull(v){
