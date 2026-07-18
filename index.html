@@ -68,15 +68,22 @@
   </div>
 </section>
 
-<section class="block" id="sec-gojuon">
-  <div class="wrap">
+<section class="block" id="sec-corner">
+  <div class="wrap wide">
     <div class="section-head">
-      <span class="tag">Reaction Map</span>
-      <h2>リアクションのあいうえお 頻出度マップ</h2>
-      <p>「リアクションのあいうえお」コーナーで登場した行を、色の濃さにして表しました。</p>
+      <span class="tag">Corner Frequency</span>
+      <h2>コーナー出現数と月ごとの推移</h2>
+      <p>全<span id="cornerEpCount" class="mono"></span>回(生配信等含む)のうち、それぞれのコーナーが何回登場したか、月ごとにどれだけ登場したかをまとめました。</p>
     </div>
-    <div class="gojuon-grid" id="gojuonGrid"></div>
-    <p class="goj-note">色が濃いほど登場回数が多い行。数字は登場回数（合計 <span id="reactTotal" class="mono"></span> 回）。</p>
+    <div class="chart-card">
+      <h3>コーナー別 総登場回数</h3>
+      <div class="chart-wrap"><div class="chart-scroll-hint">👉 横にスクロールできます</div><div class="chart-scroll"><div class="chart-scroll-inner corner"><canvas id="cornerChart"></canvas></div></div></div>
+    </div>
+    <div class="chart-card">
+      <h3>月別トレンド（主要4コーナー）</h3>
+      <div class="chart-wrap"><div class="chart-scroll-hint">👉 横にスクロールできます</div><div class="monthly-flex"><div class="monthly-axis"><canvas id="monthlyAxisChart"></canvas></div><div class="chart-scroll"><div class="chart-scroll-inner monthly"><canvas id="monthlyChart"></canvas></div></div></div></div>
+      <div class="chart-legend" id="monthlyLegend"></div>
+    </div>
   </div>
 </section>
 
@@ -95,22 +102,15 @@
   </div>
 </section>
 
-<section class="block" id="sec-corner">
-  <div class="wrap wide">
+<section class="block" id="sec-gojuon">
+  <div class="wrap">
     <div class="section-head">
-      <span class="tag">Corner Frequency</span>
-      <h2>コーナー出現数と月ごとの推移</h2>
-      <p>全<span id="cornerEpCount" class="mono"></span>回(生配信等含む)のうち、それぞれのコーナーが何回登場したか、月ごとにどれだけ登場したかをまとめました。</p>
+      <span class="tag">Reaction Map</span>
+      <h2>リアクションのあいうえお 頻出度マップ</h2>
+      <p>「リアクションのあいうえお」コーナーで登場した行を、色の濃さにして表しました。</p>
     </div>
-    <div class="chart-card">
-      <h3>コーナー別 総登場回数</h3>
-      <div class="chart-wrap"><div class="chart-scroll-hint">👉 横にスクロールできます</div><div class="chart-scroll"><div class="chart-scroll-inner corner"><canvas id="cornerChart"></canvas></div></div></div>
-    </div>
-    <div class="chart-card">
-      <h3>月別トレンド（主要4コーナー）</h3>
-      <div class="chart-wrap"><div class="chart-scroll-hint">👉 横にスクロールできます</div><div class="monthly-flex"><div class="monthly-axis"><canvas id="monthlyAxisChart"></canvas></div><div class="chart-scroll"><div class="chart-scroll-inner monthly"><canvas id="monthlyChart"></canvas></div></div></div></div>
-      <div class="chart-legend" id="monthlyLegend"></div>
-    </div>
+    <div class="gojuon-grid" id="gojuonGrid"></div>
+    <p class="goj-note">色が濃いほど登場回数が多い行。数字は登場回数（合計 <span id="reactTotal" class="mono"></span> 回）。</p>
   </div>
 </section>
 
