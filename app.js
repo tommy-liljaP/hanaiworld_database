@@ -363,8 +363,10 @@ try{
     if(!aiueoVal) return '';
     const lines = String(aiueoVal).split(/\r?\n/);
     const first = lines[0].trim();
-    const isTag = /^<.*>$/.test(first);
-    const tagHtml = isTag ? `<div style="margin-top:6px;"><span class="badge on">${first}</span></div>` : '';
+    const match = first.match(/^<(.*)>$/);
+    const isTag = !!match;
+    const tagText = match ? match[1] : '';
+    const tagHtml = isTag? `<div style="margin-top:6px;"><span class="badge on aiueo-tag">${tagText}</span></div>`: '';
     const restLines = (isTag ? lines.slice(1) : lines).join('\n');
     const valHtml = restLines ? `<div class="dt-val">${restLines}</div>` : '';
     return `<div class="detail-section"><span class="dt-label">リアクションのあいうえお</span>${tagHtml}${valHtml}</div>`;
