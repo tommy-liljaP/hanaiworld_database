@@ -566,6 +566,8 @@ function renderAll(){
   renderChar();
   renderQuiz();
   renderArchive();
+
+  startSectionObserver();
 }
 
 document.querySelectorAll(".toc-nav a").forEach(link=>{link.addEventListener("click",()=>{trackEvent("toc_click",{section:link.getAttribute("href")});});});
@@ -586,13 +588,44 @@ document.querySelectorAll('.chart-wrap').forEach(wrap => {
   check();
 });
 
-const viewedSections = new Set();
-const observer = new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(!entry.isIntersecting) return;
-const id = entry.target.id;
-if(viewedSections.has(id)) return;
-viewedSections.add(id);
-trackEvent("view_section",{section:id});});},{threshold:0.5});
-document.querySelectorAll("section[id]").forEach(section=>{observer.observe(section);});
+let sectionObserverStarted = false;
+let topViewSent = false;
+
+function startSectionObserver(){
+  if(sectionObserverStarted) return;
+  sectionObserverStarted = true;
+  if(!topViewSent){
+    topViewSent = true;
+    trackEvent("view_section",{
+      section_name:"トップ"
+    });
+  }
+  const viewedSections = new Set();
+  const SECTION_NAMES = {
+    "sec-archive":"アーカイブ",
+    "sec-corner":"コーナー集計",
+    "sec-ice":"今週のアイス",
+    "sec-gojuon":"リアクションのあいうえお",
+    "sec-char":"叶えたいキャラ",
+    "sec-quiz":"これ知ってるカナ！？"
+  };
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const id = entry.target.id;
+      if(viewedSections.has(id)) return;
+      viewedSections.add(id);
+      trackEvent("view_section",{
+        section_name: SECTION_NAMES[id] || id
+      });
+    });
+  },{threshold:0.5});
+
+  document.querySelectorAll("section[id]").forEach(section=>{
+    observer.observe(section);
+  });
+}
 
 (function(){
   let rockClicks = 0;
