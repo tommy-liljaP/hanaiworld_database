@@ -40,6 +40,15 @@ function hideLoadingOverlay(){
   setTimeout(()=>{ overlay.remove(); }, 400);
 }
 
+/* ============================================================
+   GOOGLE ANALYTICS
+   ============================================================ */
+function trackEvent(name, params = {}) {
+  if (typeof gtag === "function") {
+    gtag("event", name, params);
+  }
+}
+
 const fmtScore = n => {
   if(n>=1e12) return (n/1e12).toFixed(n%1e12===0?0:2)+'兆';
   if(n>=1e8) return (n/1e8).toFixed(n%1e8===0?0:2)+'億';
@@ -426,8 +435,14 @@ try{
 
   if(!window._archiveEventsBound){
     window._archiveEventsBound = true;
-    document.getElementById('searchBox').addEventListener('input', ()=>window._archiveRenderList());
-    document.getElementById('cornerFilter').addEventListener('change', ()=>window._archiveRenderList());
+    let searchTimer;
+    document.getElementById('searchBox').addEventListener('input', (e)=>{clearTimeout(searchTimer);
+    searchTimer = setTimeout(()=>{trackEvent("search_archive",{keyword:e.target.value});},500);
+    window._archiveRenderList();});
+
+    document.getElementById('cornerFilter').addEventListener('change',(e)=>{trackEvent("filter_corner",{corner:e.target.value});
+    window._archiveRenderList();});
+
     function setHashSilently(hash){
       if(hash){
         history.pushState({epIdx: hash}, '', '#' + hash);
@@ -463,6 +478,8 @@ try{
       if(!card) return;
       lockScroll();
       const idx = parseInt(card.dataset.idx, 10);
+      const ep = DATA.episodes[idx];
+      trackEvent("episode_open",{episode:ep.ep,title:ep.title});
       setHashSilently(DATA.episodes[idx].hash);
       showDetail(idx);
     });
@@ -498,7 +515,7 @@ try{
         <div class="detail-head">
           <span class="ep-num">${e.ep}</span><span class="ep-date">${e.date||''}</span>
           <h3>${e.title? e.title.replace(/\n/g,' ') : '（タイトルなし）'}</h3>
-          ${e.url? `<a class="listen-link" href="${e.url}" target="_blank" rel="noopener noreferrer">▶ この回を聴く</a>` : ''}
+          ${e.url? `<a class="listen-link"href="${e.url}"target="_blank"rel="noopener noreferrer"data-url="${e.url}">▶ この回を聴く</a>` : ''}
         </div>
         ${iceHtml}
 ${renderAiueoSection(e.aiueo)}
@@ -506,6 +523,8 @@ ${renderAiueoSection(e.aiueo)}
         ${remarksBlock}
         <div class="detail-badges badge-row">${badges}${guestBadge}${specialBadge}</div>
       `;
+      const listenLink = document.querySelector(".listen-link");
+      if(listenLink){listenLink.addEventListener("click",()=>{trackEvent("audio_link_click",{episode:e.ep,title:e.title,url:e.url});});}
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden','false');
       lockScroll();
@@ -549,6 +568,8 @@ function renderAll(){
   renderArchive();
 }
 
+document.querySelectorAll(".toc-nav a").forEach(link=>{link.addEventListener("click",()=>{trackEvent("toc_click",{section:link.getAttribute("href")});});});
+
 document.querySelectorAll('.chart-wrap').forEach(wrap => {
   const scroller = wrap.querySelector('.chart-scroll');
   const hint = wrap.querySelector('.chart-scroll-hint');
@@ -564,6 +585,14 @@ document.querySelectorAll('.chart-wrap').forEach(wrap => {
   window.addEventListener('resize', check);
   check();
 });
+
+const viewedSections = new Set();
+const observer = new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(!entry.isIntersecting) return;
+const id = entry.target.id;
+if(viewedSections.has(id)) return;
+viewedSections.add(id);
+trackEvent("view_section",{section:id});});},{threshold:0.5});
+document.querySelectorAll("section[id]").forEach(section=>{observer.observe(section);});
 
 (function(){
   let rockClicks = 0;
