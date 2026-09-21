@@ -133,9 +133,23 @@ try{
 function renderIce(){
 try{
   const s = DATA.ice_stats;
+  let medianCard;
+  if(s.median_item){
+    medianCard = {cls:'med', kicker:'中央値 MEDIAN', val:fmtScore(s.median_val)+'点', name:s.median_item, desc:s.median_desc};
+  }else{
+    const validSorted = DATA.ice_list.filter(x=>x.score_num).sort((a,b)=>a.score_num-b.score_num);
+    const n = validSorted.length;
+    const lo = validSorted[n/2 - 1];
+    const hi = validSorted[n/2];
+    medianCard = {
+      cls:'med', kicker:'中央値 MEDIAN', val:fmtScore(s.median_val)+'点',
+      name: lo && hi ? `${lo.name.replace(/\n/g,' ')}<br> ${hi.name.replace(/\n/g,' ')}` : '',
+      desc: lo && hi ? `${lo.name.replace(/\n/g,' ')}（${fmtScore(lo.score_num)}点）と ${hi.name.replace(/\n/g,' ')}（${fmtScore(hi.score_num)}点）の平均です` : ''
+    };
+  }
   const cards = [
     {cls:'max', kicker:'最大値 MAX', val:fmtScore(s.max_val)+'点', name:s.max_item, desc:s.max_desc},
-    {cls:'med', kicker:'中央値 MEDIAN', val:fmtScore(s.median_val)+'点', name:s.median_item, desc:s.median_desc},
+    medianCard,
     {cls:'min', kicker:'最小値 MIN', val:fmtScore(s.min_val)+'点', name:s.min_item, desc:s.min_desc},
   ];
   document.getElementById('iceHighlights').innerHTML = cards.map(c=>`
@@ -679,6 +693,7 @@ function cleanVal(v){
   if(typeof v === 'string'){
     const t = v.trim();
     if(t === '' || t === '-') return null;
+    if(/^#(N\/A|VALUE!|REF!|DIV\/0!|NAME\?|NULL!|NUM!)$/i.test(t)) return null;
     return t;
   }
   return v;
